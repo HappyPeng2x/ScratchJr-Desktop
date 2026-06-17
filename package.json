@@ -6,13 +6,11 @@
     "main": "src/main.js",
     "scripts": {
         "start": "electron-forge start",
-        "debugMain": "electron-forge start -i",
+        "debugMain": "electron-forge start --inspect-electron",
         "package": "electron-forge package",
         "make": "electron-forge make",
         "make64": "electron-forge make --arch=x64",
         "make32": "electron-forge make --arch=ia32",
-        "makeAll": "electron-forge make --arch=ia32,x64",
-        "publish": "electron-forge publish",
         "lint": "eslint src --color"
     },
     "keywords": [],
@@ -125,8 +123,6 @@
         ]
     },
     "dependencies": {
-        "electron-compile": "^6.4.2",
-        "electron-is-dev": "^0.3.0",
         "electron-squirrel-startup": "^1.0.0",
         "intl": "^1.2.5",
         "intl-messageformat": "^2.2.0",
@@ -136,11 +132,13 @@
         "hoek": "^4.2.1"
     },
     "devDependencies": {
-        "babel-plugin-transform-async-to-generator": "^6.24.1",
-        "babel-preset-env": "^1.6.1",
-        "babel-preset-react": "^6.24.1",
-        "electron-forge": "^4.3.0",
-        "electron-prebuilt-compile": "1.8.2-beta.3",
+        "@electron-forge/cli": "^7.0.0",
+        "@electron-forge/maker-deb": "^7.0.0",
+        "@electron-forge/maker-rpm": "^7.0.0",
+        "@electron-forge/maker-squirrel": "^7.0.0",
+        "@electron-forge/maker-zip": "^7.0.0",
+        "electron": "^33.0.0",
+        "esbuild": "^0.24.0",
         "eslint": "^3.19.0",
         "eslint-config-airbnb": "^15.1.0",
         "eslint-plugin-import": "^2.11.0",

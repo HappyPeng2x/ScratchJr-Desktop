@@ -8,19 +8,18 @@
 /* eslint-disable import/no-extraneous-dependencies */  // --> OFF
 /* eslint-disable import/no-unresolved  */  // --> OFF
 
-const {ipcRenderer, webFrame, remote} = require('electron');
+const {ipcRenderer, webFrame} = require('electron');
 
 
 // disable zooming inside of the browser.  This just messes up scratch jr
 webFrame.setVisualZoomLevelLimits(1, 1);
-webFrame.setLayoutZoomLevelLimits(0, 0);
 
 /* eslint-enable import/extensions */  // --> ON
 /* eslint-enable import/no-extraneous-dependencies */  // --> ON
 /* eslint-enable import/no-unresolved  */  // --> ON
 
 
-const DEBUG =   remote.getCurrentWebContents().browserWindowOptions.isDebug;  // grab the DEBUG variable from main. This is passed through the BrowserWindow creation
+const DEBUG = ipcRenderer.sendSync('io_getIsDebug');
 const DEBUG_FILEIO =  DEBUG && true;       // saving and loading user files
 const DEBUG_RESOURCEIO = DEBUG && false;  // files from the application directory
 const DEBUG_NYI = DEBUG && true;          // stuff not yet implemented

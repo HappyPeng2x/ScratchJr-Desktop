@@ -12,3 +12,5 @@ src/app/src/editor/.DS_Store
 .DS_Store
 buglist.txt
 src/debug.log
+src/app/appEntry.bundle.js
+src/app/appEntry.bundle.js.map

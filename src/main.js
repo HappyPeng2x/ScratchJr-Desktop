@@ -20,28 +20,21 @@
 
 const path = require('path');
 const process = require('process');
-const url = require('url');
 const fs = require('fs');
 const util = require('util');
-
 const crypto = require('crypto');
-
-let isDev =  require('electron-is-dev');
-
-isDev = (isDev) || process.env.DEBUG_SCRATCHJR;
-
 
 /* eslint-disable import/extensions */  // --> OFF
 /* eslint-disable import/no-extraneous-dependencies */  // --> OFF
 /* eslint-disable import/no-unresolved  */  // --> OFF
 
-const { app, dialog, BrowserWindow, BrowserView, ipcMain, Menu } = require('electron');  
-
-
+const { app, dialog, BrowserWindow, ipcMain, Menu } = require('electron');
 
 /* eslint-enable import/extensions */  // --> ON
 /* eslint-enable import/no-extraneous-dependencies */  // --> ON
 /* eslint-enable import/no-unresolved  */  // --> ON
+
+const isDev = !app.isPackaged || !!process.env.DEBUG_SCRATCHJR;
 
 
 
@@ -99,29 +92,16 @@ function createWindow() {
       height: 800,
       minHeight: 800,
       minWidth: 1000,
-      customVar: 'elephants',
-      isDebug: DEBUG
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+      }
     });
 
-  const view = new BrowserView({
-    title: 'Scratch Jr',
-    icon: `${__dirname}app/assets/icon/icon.png`,
-    webPreferences: {
-      nodeIntegration: false
-    },
-  });
-
   dataStore = new ScratchJRDataStore(win);
-  win.setBrowserView(view);
-
 
   // and load the index.html of the app.
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, 'app/index.html'),
-    protocol: 'file',
-    slashes: true,
-
-  }));
+  win.loadFile(path.join(__dirname, 'app/index.html'));
 
   if (DEBUG_LOAD_DEVTOOLS) {
     // Open the DevTools.
@@ -446,7 +426,7 @@ ipcMain.on('io_getAudioData', (event, audioName) => {
     return;
   }
 
-  const dataStr = new Buffer(data).toString('base64');
+  const dataStr = Buffer.from(data).toString('base64');
   const extension = path.extname(filePath);
   if (extension === '.mp3') {
     event.returnValue = `data:audio/mp3;base64,${dataStr}`;
@@ -536,7 +516,6 @@ class ScratchJRDataStore {
 	    			title: 'Database Restored',
 	    			message: 'The database has been restored'
 	    		},
-	    		null /*no callback*/
 	    		);
 
 	} else {
@@ -726,7 +705,7 @@ class DatabaseManager {
     /** saves the database to the file specified in this.databaseFilename */
   save() {
     const data = this.db.export();
-    const buffer = new Buffer(data);
+    const buffer = Buffer.from(data);
     fs.writeFileSync(this.databaseFilename, buffer);
   }
 
