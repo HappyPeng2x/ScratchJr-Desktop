@@ -7,7 +7,7 @@ Scratch and ScratchJr are trademarks of Massachusetts Institute of Technology, w
 
 > **Status: experimental.**
 > This fork upgrades the original [jfo8000/ScratchJr-Desktop](https://github.com/jfo8000/ScratchJr-Desktop)
-> from Electron 1.x (2017) to a modern Electron stack. It has only been tested on **Debian 13 (Trixie)**.
+> from Electron 1.x (2017) to a modern Electron stack. It has been tested on **Debian 13 (Trixie)** and **Raspberry Pi OS 6.2** (also based on Debian Trixie).
 > Other platforms (Windows, macOS, older Debian/Ubuntu) are untested and may require additional work.
 
 ### What was upgraded
@@ -97,7 +97,7 @@ npm run start
 
 ## Building a .deb package for Debian / Ubuntu
 
-These steps were tested on **Debian 13 (Trixie)**. You will need `fakeroot` and `dpkg` installed:
+These steps were tested on **Debian 13 (Trixie)** and **Raspberry Pi OS 6.2** (also based on Debian Trixie). You will need `fakeroot` and `dpkg` installed:
 
 ```bash
 sudo apt install fakeroot dpkg
